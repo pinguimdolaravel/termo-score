@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 class UserController extends Controller
 {
-  public function index(): array
-  {
-    return [];
-  }
+    public function index(): array
+    {
+        return [];
+    }
 }
