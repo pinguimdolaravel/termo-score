@@ -12,7 +12,8 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "livewire/livewire": "^2.10"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -26,6 +27,7 @@
         "nunomaduro/larastan": "^2.1",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.2",
+        "pestphp/pest-plugin-livewire": "^1.0",
         "pestphp/pest-plugin-parallel": "^1.0",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0",
