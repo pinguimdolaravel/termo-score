@@ -1,0 +1,8 @@
+#!/bin/sh
+# Disallow all rebasing
+
+NC='\033[0m'
+BRed='\033[1;31m'
+
+echo -e "${BRed}pre-rebase: Rebasing is dangerous 👿. Don't do it.${NC}"
+exit 1

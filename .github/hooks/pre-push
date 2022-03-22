@@ -1,0 +1,50 @@
+#!/bin/sh
+
+NC='\033[0m'
+BBlue='\033[1;34m'
+BRed='\033[1;31m'
+
+NAME=$(git branch | grep '*' | sed 's/* //')
+echo "Running pre-push hook on: ${BBlue}" $NAME "${NC}"
+
+# ----------------
+# 1. Laravel Stan
+./vendor/bin/phpstan analyze
+STATUS_CODE=$?
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}1...... phpstan: deu ruim${NC}"
+    exit 1
+fi
+
+# ----------------------------------------------------------------------------------------
+# 2. PHP Code Sniffer
+echo "${BBlue}2. PHP Code Sniffer${NC}"
+./vendor/bin/phpcs --standard=phpcs.xml
+
+STATUS_CODE=$?
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}2.... php code sniffer${NC}"
+    exit 1
+fi
+
+# ----------------------------------------------------------------------------------------
+# 3. PHP Code Fixer
+echo "${BBlue}3. PHP Code Fixer${NC}"
+./vendor/bin/php-cs-fixer fix --dry-run --using-cache=no --verbose --stop-on-violation
+
+STATUS_CODE=$?
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}3.... php code fixer${NC}"
+    exit 1
+fi
+
+# ----------------------------------------------------------------------------------------
+# 4. PHP Unit Tests
+echo "${BBlue}4. Running Tests${NC}"
+php artisan test --parallel
+
+STATUS_CODE=$?
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}4.... phpunit tests${NC}"
+    exit 1
+fi
