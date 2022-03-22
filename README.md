@@ -1,64 +1,383 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Setup de um Projeto Laravel
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## [Criar novo projeto laravel](https://laravel.com/docs/9.x#installation-via-composer)
 
-## About Laravel
+```bash
+composer create-project laravel/laravel novo-app
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 1. [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+composer require friendsofphp/php-cs-fixer --dev
+```
 
-## Learning Laravel
+### Config file
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+`php-cs-fixer.php`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```php
+<?php
 
-## Laravel Sponsors
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+$rules = [
+    '@PSR2'                                       => true,
+    'align_multiline_comment'                     => false,
+    'array_indentation'                           => true,
+    'array_syntax'                                => ['syntax' => 'short'],
+    'binary_operator_spaces'                      => [
+        'default' => 'align_single_space_minimal',
+    ],
+    'blank_line_after_namespace'                  => true,
+    'blank_line_after_opening_tag'                => false,
+    'blank_line_before_statement'                 => ['statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try']],
+    'braces'                                      => [
+        'allow_single_line_closure'                   => false,
+        'position_after_anonymous_constructs'         => 'same',
+        'position_after_control_structures'           => 'same',
+        'position_after_functions_and_oop_constructs' => 'next',
+    ],
+    'cast_spaces'                                 => ['space' => 'none'],
+    // 'class_attributes_separation' => [
+    //     'elements' => ['method', 'property'],
+    // ],
+    'no_unused_imports'                           => true,
+    'combine_consecutive_issets'                  => false,
+    'combine_consecutive_unsets'                  => false,
+    'combine_nested_dirname'                      => false,
+    'comment_to_phpdoc'                           => false,
+    'compact_nullable_typehint'                   => false,
+    'concat_space'                                => ['spacing' => 'one'],
+    'constant_case'                               => [
+        'case' => 'lower',
+    ],
+    'date_time_immutable'                         => false,
+    'declare_equal_normalize'                     => [
+        'space' => 'single',
+    ],
+    'declare_strict_types'                        => false,
+    'dir_constant'                                => false,
+    'doctrine_annotation_array_assignment'        => false,
+    'doctrine_annotation_braces'                  => false,
+    'doctrine_annotation_indentation'             => [
+        'ignored_tags'       => [],
+        'indent_mixed_lines' => true,
+    ],
+    'doctrine_annotation_spaces'                  => [
+        'after_argument_assignments'     => false,
+        'after_array_assignments_colon'  => false,
+        'after_array_assignments_equals' => false,
+    ],
+    'elseif'                                      => false,
+    'encoding'                                    => true,
+    'indentation_type'                            => true,
+    'no_useless_else'                             => true,
+    'no_useless_return'                           => true,
+    'ordered_imports'                             => true,
+    'single_quote'                                => false,
+    'ternary_operator_spaces'                     => true,
+    'no_extra_blank_lines'                        => true,
+    'no_multiline_whitespace_around_double_arrow' => true,
+    'multiline_whitespace_before_semicolons'      => true,
+    'no_singleline_whitespace_before_semicolons'  => true,
+    'no_spaces_around_offset'                     => true,
+    'ternary_to_null_coalescing'                  => true,
+    'whitespace_after_comma_in_array'             => true,
+    'trim_array_spaces'                           => true,
+    'unary_operator_spaces'                       => true,
+];
 
-### Premium Partners
+$finder = new Finder();
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+$finder->in([
+    __DIR__ . '/app',
+    __DIR__ . '/database',
+]);
 
-## Contributing
+$config = new Config();
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+$config->setIndent('    ');
 
-## Code of Conduct
+$config
+    ->setRiskyAllowed(false)
+    ->setRules($rules)
+    ->setFinder($finder);
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+return $config;
+```
 
-## Security Vulnerabilities
+### Run
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+`./vendor/bin/php-cs-fixer fix `
 
-## License
+### Ref
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[Workenck/Shift](https://gist.github.com/laravel-shift/cab527923ed2a109dda047b97d53c200)
+
+---
+
+## 2. [Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+
+```bash
+composer require squizlabs/php_codesniffer --dev
+```
+
+### Config file
+
+`phpcs.xml`
+
+```xml
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="Pinguim"
+         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+    <description>The coding standard for Pinguim do Laravel.</description>
+
+    <file>app</file>
+
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="parallel" value="75"/>
+    <arg value="np"/>
+
+    <rule ref="Generic.Commenting.Todo">
+        <type>error</type>
+    </rule>
+
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+</ruleset>
+```
+
+### Run
+
+`./vendor/bin/cs`
+
+### Ref
+
+[laravel-phpcs](https://github.com/mreduar/laravel-phpcs/blob/master/phpcs.xml)
+
+---
+
+## 3. [LaraStan](https://github.com/nunomaduro/larastan)
+
+```bash
+composer require nunomaduro/larastan:^2.0 --dev
+```
+
+### Config file
+
+`phpstan.neon`
+
+```neon
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+
+    # The level 9 is the highest level
+    level: 5
+
+    checkMissingIterableValueType: false
+```
+
+### Run
+
+`./vendor/bin/phpstan analyse`
+
+### Ref [PHPStan](https://phpstan.org/config-reference)
+
+---
+
+## 4. [Pest](https://pestphp.com/)
+
+```bash
+composer require pestphp/pest --dev --with-all-dependencies
+composer require pestphp/pest-plugin-laravel --dev
+composer require pestphp/pest-plugin-parallel --dev
+
+php artisan pest:install
+```
+
+### Run
+
+`./vendor/bin/pest --parallel`
+
+---
+
+## 5. [DebugBar](https://github.com/barryvdh/laravel-debugbar)
+
+```bash
+composer require barryvdh/laravel-debugbar --dev
+```
+
+---
+
+## 6. [Telescope](https://laravel.com/docs/9.x/telescope#local-only-installation)
+
+```bash
+composer require laravel/telescope --dev
+
+php artisan telescope:install
+
+php artisan migrate
+```
+
+Add in file `App\Providers\AppServiceProvider`:
+
+```php
+public function register()
+{
+    if ($this->app->environment('local')) {
+        $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        $this->app->register(TelescopeServiceProvider::class);
+    }
+}
+```
+
+Adding the following to your `composer.json` file:
+
+```json
+"extra": {
+    "laravel": {
+        "dont-discover": [
+            "laravel/telescope"
+        ]
+    }
+},
+```
+
+**\*Dark mode**: uncomment (line 19) `Telescope::night();` in file `app/Providers/TelescopeServiceProvider.php`.\*
+
+---
+
+---
+
+## Git Hooks
+
+### Pre-Push
+
+#### file `.git/hooks/pre-push`
+
+```shell
+#!/bin/sh
+
+
+NC='\033[0m'
+BBlue='\033[1;34m'
+BRed='\033[1;31m'
+
+NAME=$(git branch | grep '*' | sed 's/* //')
+echo "\nRunning pre-push hook on: ${BBlue}" $NAME "${NC}\n"
+
+# ---------------------------------------------------------------------------------------------------
+# 1. Laravel Stan
+echo "\n\n${BBlue}1. Larastan (PHPStan) ${NC}"
+./vendor/bin/phpstan analyse
+
+STATUS_CODE=$?
+
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}1.... larastan/phpstan: deu ruim ${NC}"
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------------------------------
+# 2. PHP Code Sniffer
+echo "\n\n${BBlue}2. PHP Code Sniffer ${NC}"
+./vendor/bin/phpcs --standard=phpcs.xml
+
+STATUS_CODE=$?
+
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}2.... php code sniffer${NC}"
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------------------------------
+# 3. PHP Code Fixer
+echo "\n\n${BBlue}3. PHP Code Fixer ${NC}"
+./vendor/bin/php-cs-fixer fix --dry-run --using-cache=no --verbose --stop-on-violation
+
+STATUS_CODE=$?
+
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}3.... php code fixer${NC}"
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------------------------------
+# 4. PHP Tests
+echo "\n\n${BBlue}4. PHP Unit Tests (Pest) ${NC}"
+./vendor/bin/pest --parallel
+
+STATUS_CODE=$?
+
+if [ $STATUS_CODE -ne 0 ]; then
+    echo "${BRed}4.... phpunit/pest${NC}"
+    exit 1
+fi
+
+echo "${BBlue}pushing...${NC}\n"
+```
+
+---
+
+### pre-rebase
+
+#### file `.git/hooks/pre-rebase`
+
+```shell
+#!/bin/sh
+# Disallow all rebasing
+
+NC='\033[0m'
+BRed='\033[1;31m'
+
+echo -e "\n${BRed}pre-rebase: Rebase is dangerous! 👿️ Don't do it.${NC}\n"
+
+exit 1
+```
+
+---
+
+### commit-msg
+
+#### file `.git/hooks/commit-msg`
+
+```shell
+#!/bin/sh
+
+REGEX_ISSUE_ID="[a-zA-Z0-9,\.\_\-]+-[0-9]+"
+
+NC='\033[0m'
+BBlue='\033[1;34m'
+BRed='\033[1;31m'
+
+# Find current branch name
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+# Extract issue id from branch name
+ISSUE_ID=$(echo "$BRANCH_NAME" | grep -o -E "$REGEX_ISSUE_ID")
+if [-z "$ISSUE_ID"]; then
+    echo -e "${BRed}Branch doesn't have Jira task code on itq....${NC}"
+    echo -e "${BBlue}You can use ${BRed}git commit -m \"\" --no-verify${BBlue} to avoid this hook.${NC}"
+    exit 1
+fi
+echo "$ISSUE_ID"': '$(cat "$1") > "$1"
+```
+
+---
