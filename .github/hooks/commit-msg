@@ -1,0 +1,25 @@
+#!/bin/bash
+# The script below adds the branch name automatically to
+# every one of your commit messages. The regular expression
+# below searches for JIRA issue key's. The issue key will
+# be extracted out of your branch name
+
+REGEX_ISSUE_ID="[a-zA-Z0-9,\.\_\-]+-[0-9]+"
+
+NC='\033[0m'
+BBlue='\033[1;34m'
+BRed='\033[1;31m'
+
+# Find current branch name
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+# Extract issue id from branch name
+ISSUE_ID=$(echo "$BRANCH_NAME" | grep -o -E "$REGEX_ISSUE_ID")
+
+if [ -z "$ISSUE_ID" ]; then
+    echo -e "${BRed}Branch doesn't have Jira task code on itq... ${NC}"
+    echo -e "${BBlue}You can use ${BRed}git commit -m \"\" --no-verify${BBlue} to avoid this hook.${NC}"
+    exit 1
+fi
+
+echo "$ISSUE_ID"': '$(cat "$1") > "$1"
