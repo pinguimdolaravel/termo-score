@@ -25,6 +25,7 @@ class DailyEntry
             if ($c == 0) {
                 return str($b)->afterLast(' ')->toString();
             }
+
             return $a . '/' . str($b)->before(' ')->toString();
         }, '');
     }
