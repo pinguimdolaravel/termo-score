@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\DailyEntry;
 use App\Models\DailyScore;
 use App\Rules\DetailRule;
 use App\Rules\GameIdRule;
@@ -28,20 +29,7 @@ class LogDailyScore extends Component
 
     public function save()
     {
-        $this->data   = trim($this->data);
-        $this->gameId = '#' . str($this->data)->betweenFirst('#', ' ')->toString();
-        $this->score  = str($this->data)->explode('/')->reduce(function ($a, $b, $c) {
-            if ($c == 0) {
-                return str($b)->afterLast(' ')->toString();
-            }
-            return $a . '/' . str($b)->before(' ')->toString();
-        }, '');
-
-        $detail = explode(PHP_EOL, $this->data);
-        unset($detail[0]);
-        unset($detail[1]);
-
-        $this->detail = trim(implode(PHP_EOL, $detail));
+        [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
 
         $this->validate([
             'gameId' => ['required', new GameIdRule()],
