@@ -10,6 +10,7 @@ use function Pest\Livewire\livewire;
 it('should be able to save the daily score and track the id of the game', function ($score, $expectedGameId, $expectedScore, $expectedDetail) {
     livewire(LogDailyScore::class)
         ->set('data', $score)
+        ->set('word', 'teste')
         ->call('save');
 
     $score = DailyScore::query()->first();
@@ -64,6 +65,7 @@ it('should be able to save the daily score and track the id of the game', functi
 it("should warn the user if we can't save the daily score because of the format", function ($score) {
     livewire(LogDailyScore::class)
         ->set('data', $score)
+        ->set('word', 'teste')
         ->call('save')
         ->assertHasErrors([
             'gameId' => GameIdRule::class,
@@ -76,3 +78,29 @@ it("should warn the user if we can't save the daily score because of the format"
     ['joguei term.ooo 81 4/3 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩'],
 ]);
 
+
+it('should request for the word of the day', function () {
+    livewire(LogDailyScore::class)
+        ->call('save')
+        ->assertHasErrors(['word' => 'required']);
+});
+
+it('should ask for confirmation of the word of the day', function () {
+    livewire(LogDailyScore::class)
+        ->set('word', 'teste')
+        ->set('word_confirmation', '')
+        ->call('save')
+        ->assertHasErrors(['word' => 'confirmedj']);
+});
+
+test('if word already exists for the given game id we should check if is valid', function () {
+    WordOfDay::factory()->create(['word' => 'teste', 'game_id' => 81]);
+
+    $data = 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩';
+
+    livewire(LogDailyScore::class)
+        ->set('data', $data)
+        ->set('word', 'paulo')
+        ->call('save')
+        ->assertHasErrors(['word' => WordIsValidRule::class]);
+});
