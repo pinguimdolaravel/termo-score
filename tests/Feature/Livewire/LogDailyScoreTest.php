@@ -85,6 +85,13 @@ it('should request for the word of the day', function () {
         ->assertHasErrors(['word' => 'required']);
 });
 
+test('word should have 5 letters', function () {
+    livewire(LogDailyScore::class)
+        ->set('word', '1234')
+        ->call('save')
+        ->assertHasErrors(['word' => 'size']);
+});
+
 it('should ask for confirmation of the word of the day', function () {
     livewire(LogDailyScore::class)
         ->set('word', 'teste')

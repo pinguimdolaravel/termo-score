@@ -33,7 +33,7 @@ class LogDailyScore extends Component
     {
         $this->validate([
             'data' => 'required',
-            'word' => 'required'
+            'word' => ['required', 'size:5'],
         ]);
 
         [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
