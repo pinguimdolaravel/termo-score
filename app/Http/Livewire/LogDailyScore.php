@@ -36,7 +36,7 @@ class LogDailyScore extends Component
             'score'  => ['required', new ScoreRule()],
             'detail' => ['required', new DetailRule()],
         ]);
-
+        
         DailyScore::query()
             ->create([
                 'game_id' => $this->gameId,
