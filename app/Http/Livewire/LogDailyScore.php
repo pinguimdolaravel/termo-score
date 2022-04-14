@@ -7,6 +7,7 @@ use App\Models\DailyScore;
 use App\Rules\DetailRule;
 use App\Rules\GameIdRule;
 use App\Rules\ScoreRule;
+use App\Rules\WordIsValidRule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,6 +18,8 @@ class LogDailyScore extends Component
     public ?string $data = null;
 
     public ?string $word = null;
+
+    public ?string $word_confirmation = null;
 
     public ?string $gameId = null;
 
@@ -33,7 +36,7 @@ class LogDailyScore extends Component
     {
         $this->validate([
             'data' => 'required',
-            'word' => ['required', 'size:5'],
+            'word' => ['required', 'size:5', 'confirmed'],
         ]);
 
         [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
@@ -44,6 +47,10 @@ class LogDailyScore extends Component
             'detail' => ['required', new DetailRule()],
         ]);
 
+        $this->validate([
+            'word' => new WordIsValidRule($this->gameId),
+        ]);
+        
         DailyScore::query()
             ->create([
                 'game_id' => $this->gameId,
