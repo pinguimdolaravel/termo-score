@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class DailyScore extends Model
 {
-    protected static function booted()
+    public function gameId(): Attribute
     {
-        static::creating(function ($model) {
-            $model->game_id = str($model->game_id)->replace('#', '');
-        });
+        return new Attribute(
+            set: fn ($value) => str($value)->replace('#', '')
+        );
     }
 }

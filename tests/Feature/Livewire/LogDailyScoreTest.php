@@ -13,6 +13,7 @@ it('should be able to save the daily score and track the id of the game', functi
     livewire(LogDailyScore::class)
         ->set('data', $score)
         ->set('word', 'teste')
+        ->set('word_confirmation', 'teste')
         ->call('save');
 
     $score = DailyScore::query()->first();
@@ -23,51 +24,51 @@ it('should be able to save the daily score and track the id of the game', functi
         ->detail->toBe($expectedDetail);
 })->with([
     '1.6' => [
-        'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩', '#81', '1/6', '🟩🟩🟩🟩🟩',
+        'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩', 81, '1/6', '🟩🟩🟩🟩🟩',
     ],
     '2.6' => [
         'joguei term.ooo #81 2/6 🔥 1' . PHP_EOL . PHP_EOL . '⬛🟨🟨⬛⬛' . PHP_EOL . '🟩🟩🟩🟩🟩',
-        '#81',
+        81,
         '2/6',
         '⬛🟨🟨⬛⬛' . PHP_EOL . '🟩🟩🟩🟩🟩',
     ],
     '3.6' => [
         'joguei term.ooo #81 3/6 🔥 1' . PHP_EOL . PHP_EOL . '⬛🟨🟨⬛🟨' . PHP_EOL . '🟩🟩🟩⬛⬛' . PHP_EOL . '🟩🟩🟩🟩🟩',
-        '#81',
+        81,
         '3/6',
         '⬛🟨🟨⬛🟨' . PHP_EOL . '🟩🟩🟩⬛⬛' . PHP_EOL . '🟩🟩🟩🟩🟩',
     ],
     '4.6' => [
         'joguei term.ooo #81 4/6 🔥 1' . PHP_EOL . PHP_EOL . '🟨⬛⬛⬛⬛' . PHP_EOL . '⬛⬛🟨⬛⬛' . PHP_EOL . '🟩🟩🟩⬛⬛' . PHP_EOL . '🟩🟩🟩🟩🟩',
-        '#81',
+        81,
         '4/6',
         '🟨⬛⬛⬛⬛' . PHP_EOL . '⬛⬛🟨⬛⬛' . PHP_EOL . '🟩🟩🟩⬛⬛' . PHP_EOL . '🟩🟩🟩🟩🟩',
     ],
     '5.6' => [
         'joguei term.ooo #81 5/6 🔥 1' . PHP_EOL . PHP_EOL . '⬛⬛🟨🟨⬛' . PHP_EOL . '🟨🟨⬛🟨⬛' . PHP_EOL . '🟨🟩⬛⬛🟩' . PHP_EOL . '⬛🟩🟩🟨🟩' . PHP_EOL . '🟩🟩🟩🟩🟩',
-        '#81',
+        81,
         '5/6',
         '⬛⬛🟨🟨⬛' . PHP_EOL . '🟨🟨⬛🟨⬛' . PHP_EOL . '🟨🟩⬛⬛🟩' . PHP_EOL . '⬛🟩🟩🟨🟩' . PHP_EOL . '🟩🟩🟩🟩🟩',
     ],
     '6.6' => [
         'joguei term.ooo #81 6/6 🔥 1' . PHP_EOL . PHP_EOL . '⬛⬛⬛⬛🟨' . PHP_EOL . '⬛🟩⬛⬛🟨' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '🟩🟩🟩🟩🟩',
-        '#81',
+        81,
         '6/6',
         '⬛⬛⬛⬛🟨' . PHP_EOL . '⬛🟩⬛⬛🟨' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '🟩🟩🟩🟩🟩',
     ],
     'x.6' => [
         'joguei term.ooo #81 X/6 🔥 1' . PHP_EOL . PHP_EOL . '🟨⬛⬛⬛🟨' . PHP_EOL . '⬛🟩⬛⬛🟨' . PHP_EOL . '⬛🟩🟨🟩⬛' . PHP_EOL . '🟨🟩⬛🟩⬛' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '⬛🟩🟩🟩🟩',
-        '#81',
+        81,
         'X/6',
         '🟨⬛⬛⬛🟨' . PHP_EOL . '⬛🟩⬛⬛🟨' . PHP_EOL . '⬛🟩🟨🟩⬛' . PHP_EOL . '🟨🟩⬛🟩⬛' . PHP_EOL . '⬛🟩🟩🟩🟩' . PHP_EOL . '⬛🟩🟩🟩🟩',
     ],
 ]);
 
-
 it("should warn the user if we can't save the daily score because of the format", function ($score) {
     livewire(LogDailyScore::class)
         ->set('data', $score)
         ->set('word', 'teste')
+        ->set('word_confirmation', 'teste')
         ->call('save')
         ->assertHasErrors([
             'gameId' => GameIdRule::class,
