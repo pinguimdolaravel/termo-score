@@ -11,8 +11,7 @@ class WordOfDayCreatedEvent
 
     public function __construct(
         public WordOfDay $wordOfDay
-    )
-    {
+    ) {
         //
     }
 }
