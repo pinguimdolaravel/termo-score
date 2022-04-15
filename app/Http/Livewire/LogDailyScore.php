@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Actions\DailyEntry;
+use App\Jobs\CheckDailyScoreJob;
 use App\Models\DailyScore;
+use App\Models\WordOfDay;
 use App\Rules\DetailRule;
 use App\Rules\GameIdRule;
 use App\Rules\ScoreRule;
@@ -36,11 +38,34 @@ class LogDailyScore extends Component
 
     public function save()
     {
+        $this->validateBaseData();
+
+        $this->validatedGameScore();
+
+        $score = DailyScore::query()
+            ->create([
+                'game_id' => $this->gameId,
+                'score'   => $this->score,
+                'detail'  => $this->detail,
+                'word'    => $this->word,
+                'status'  => 'pending',
+            ]);
+
+        $this->message = 'Your score is being calculated.';
+
+        $this->dispatchJobIfWordOfDayExists($score);
+    }
+
+    private function validateBaseData(): void
+    {
         $this->validate([
             'data' => 'required',
             'word' => ['required', 'size:5', 'confirmed'],
         ]);
+    }
 
+    private function validatedGameScore(): void
+    {
         [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
 
         $this->validate([
@@ -52,16 +77,15 @@ class LogDailyScore extends Component
         $this->validate([
             'word' => new WordIsValidRule($this->gameId),
         ]);
+    }
 
-        DailyScore::query()
-            ->create([
-                'game_id' => $this->gameId,
-                'score'   => $this->score,
-                'detail'  => $this->detail,
-                'word'    => $this->word,
-                'status'  => 'pending',
-            ]);
-
-        $this->message = 'Your score is being calculated.';
+    private function dispatchJobIfWordOfDayExists(DailyScore $score): void
+    {
+        if ($wordOfDay = WordOfDay::whereGameId($score->game_id)->first()) {
+            CheckDailyScoreJob::dispatch(
+                $wordOfDay,
+                $score
+            );
+        }
     }
 }
