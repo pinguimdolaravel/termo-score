@@ -11,8 +11,7 @@ class WordIsValidRule implements Rule
 
     public function __construct(
         protected string $gameId
-    )
-    {
+    ) {
         //
     }
 
