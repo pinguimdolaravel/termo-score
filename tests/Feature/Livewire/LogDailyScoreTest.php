@@ -80,7 +80,6 @@ it("should warn the user if we can't save the daily score because of the format"
     ['joguei term.ooo 81 4/3 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩'],
 ]);
 
-
 it('should request for the word of the day', function () {
     livewire(LogDailyScore::class)
         ->call('save')
@@ -113,4 +112,21 @@ test('if word already exists for the given game id we should check if is valid',
         ->set('word_confirmation', 'paulo')
         ->call('save')
         ->assertHasErrors(['word' => WordIsValidRule::class]);
+});
+
+test('if word doesnt exists, we will set the status as pending and warn the user that the score is being calculated', function () {
+    $data = 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩';
+
+    livewire(LogDailyScore::class)
+        ->set('data', $data)
+        ->set('word', 'paulo')
+        ->set('word_confirmation', 'paulo')
+        ->call('save')
+        ->assertHasNoErrors();
+
+    expect(DailyScore::query()->first())
+        ->ray()
+        ->status->toBe('pending')
+        ->word->toBe('paulo')
+        ->game_id->toBe(81);
 });

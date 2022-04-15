@@ -27,6 +27,8 @@ class LogDailyScore extends Component
 
     public ?string $detail = null;
 
+    public ?string $message = null;
+
     public function render(): Factory|View|Application
     {
         return view('livewire.log-daily-score');
@@ -50,12 +52,16 @@ class LogDailyScore extends Component
         $this->validate([
             'word' => new WordIsValidRule($this->gameId),
         ]);
-        
+
         DailyScore::query()
             ->create([
                 'game_id' => $this->gameId,
                 'score'   => $this->score,
                 'detail'  => $this->detail,
+                'word'    => $this->word,
+                'status'  => 'pending',
             ]);
+
+        $this->message = 'Your score is being calculated.';
     }
 }

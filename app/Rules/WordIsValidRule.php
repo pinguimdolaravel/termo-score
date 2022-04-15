@@ -20,10 +20,15 @@ class WordIsValidRule implements Rule
     {
         $this->attribute = $attribute;
 
-        return WordOfDay::query()
-            ->where('game_id', $this->gameId)
-            ->where('word', $value)
-            ->exists();
+        $wordOfTheDay = WordOfDay::query()
+            ->where('game_id', str($this->gameId)->replace('#', ''))
+            ->first();
+
+        if (!$wordOfTheDay) {
+            return true;
+        }
+
+        return $wordOfTheDay->word === $value;
     }
 
     public function message(): string
