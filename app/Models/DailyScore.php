@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class DailyScore extends Model
 {
     use HasFactory;
+    
+    const STATUS_FINISHED = 'finished';
 
     public function gameId(): Attribute
     {

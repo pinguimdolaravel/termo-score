@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('detail');
             $table->string('word', 5)->nullable();
             $table->string('status', 10)->nullable();
+            $table->smallInteger('points')->nullable();
             $table->timestamps();
         });
     }
