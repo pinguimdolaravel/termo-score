@@ -50,3 +50,17 @@ it('should not calculate the points if the word is not the same', function () {
         ->points->toBe(0)
         ->status->toBe(DailyScore::STATUS_WRONG_WORD);
 });
+
+test('the game id from the wordOfDay should be the same as the dailyScore entry', function () {
+    // Arrange
+    $dailyScore = DailyScore::factory()->create(['game_id' => 1, 'score' => '1/6', 'word' => 'score']);
+    $word       = WordOfDay::factory()->create(['word' => 'score', 'game_id' => 2]);
+
+    // Act
+    CheckDailyScoreJob::dispatchSync($word, $dailyScore);
+
+    // Assert
+    expect($dailyScore->refresh())
+        ->points->toBeNull()
+        ->status->toBe(DailyScore::STATUS_PENDING);
+});

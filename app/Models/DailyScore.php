@@ -12,6 +12,7 @@ class DailyScore extends Model
 
     const STATUS_FINISHED   = 'finished';
     const STATUS_WRONG_WORD = 'wrong_word';
+    const STATUS_PENDING    = 'pending';
 
     public function gameId(): Attribute
     {
