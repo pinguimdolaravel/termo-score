@@ -17,7 +17,8 @@ class CheckDailyScoreJob implements ShouldQueue
     public function __construct(
         public WordOfDay  $wordOfDay,
         public DailyScore $dailyScore
-    ) {
+    )
+    {
         //
     }
 
@@ -44,6 +45,7 @@ class CheckDailyScoreJob implements ShouldQueue
             '5/6' => 1,
             '6/6' => 0,
             'X/6' => -1,
+            default => null
         };
 
         $status = DailyScore::STATUS_FINISHED;
