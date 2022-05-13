@@ -21,13 +21,13 @@ class DailyEntry
 
     public function getScore(string $data): string
     {
-        return str($data)->explode('/')->reduce(function ($a, $b, $c) {
+        return str(str($data)->explode('/')->reduce(function ($a, $b, $c) {
             if ($c == 0) {
                 return str($b)->afterLast(' ')->toString();
             }
 
             return $a . '/' . str($b)->before(' ')->toString();
-        }, '');
+        }, ''))->replace('*', '');
     }
 
     public function getDetail(string $data): string

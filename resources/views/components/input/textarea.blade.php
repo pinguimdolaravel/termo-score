@@ -1,0 +1,10 @@
+@props(['name', 'label'])
+
+<div class="flex flex-col space-y-1">
+    <label for="{{ $name }}" class="text-sm text-slate-700 font-semibold">{{ $label }}</label>
+    <textarea wire:model="{{ $name }}" name="{{ $name }}" id="{{ $name }}" rows="8"
+        class="text-xs rounded border-slate-300 focus:ring-inset focus:ring-indigo-400 focus:border-indigo-400"></textarea>
+    @error($name)
+        <span class="text-rose-700 text-sm">{{ $message }}</span>
+    @enderror
+</div>

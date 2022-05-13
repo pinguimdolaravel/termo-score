@@ -29,7 +29,7 @@ class LogDailyScore extends Component
 
     public ?string $detail = null;
 
-    public ?string $message = null;
+    public ?string $status = null;
 
     public function render(): Factory|View|Application
     {
@@ -51,7 +51,7 @@ class LogDailyScore extends Component
                 'status'  => 'pending',
             ]);
 
-        $this->message = 'Your score is being calculated.';
+        $this->status = 'Your score is being calculated.';
 
         $this->dispatchJobIfWordOfDayExists($score);
     }

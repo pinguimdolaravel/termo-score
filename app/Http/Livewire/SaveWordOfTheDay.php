@@ -16,6 +16,8 @@ class SaveWordOfTheDay extends Component
 
     public ?int $game_id = null;
 
+    public ?string $status = null;
+
     public function render(): Factory|View|Application
     {
         return view('livewire.save-word-of-the-day');
@@ -33,5 +35,8 @@ class SaveWordOfTheDay extends Component
                 'word'    => $this->word,
                 'game_id' => $this->game_id,
             ]);
+
+        $this->status = "Word saved";
+        $this->reset('word', 'game_id');
     }
 }

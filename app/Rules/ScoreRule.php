@@ -13,6 +13,6 @@ class ScoreRule implements Rule
 
     public function message(): string
     {
-        return 'The validation error message.';
+        return 'Deu ruim no score';
     }
 }
