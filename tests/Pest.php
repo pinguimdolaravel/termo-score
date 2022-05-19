@@ -48,3 +48,12 @@ function something()
 {
     // ..
 }
+
+function requiresMysql()
+{
+    if (DB::getDriverName() !== 'mysql') {
+        test()->markTestSkipped('This test requires MySQL database');
+    }
+
+    return test();
+}
