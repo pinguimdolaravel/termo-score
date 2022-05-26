@@ -10,6 +10,12 @@ use App\Models\WordOfDay;
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
 
+beforeEach(function () {
+    $user = User::factory()->admin()->createOne();
+
+    actingAs($user);
+});
+
 it('should be able to save word of the day', function () {
     livewire(SaveWordOfTheDay::class)
         ->set('word', 'teste')
