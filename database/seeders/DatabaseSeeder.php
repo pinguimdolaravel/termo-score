@@ -9,9 +9,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        User::factory()->create([
+        User::factory()->admin()->create([
             'name'  => 'Rafael Lunardelli',
-            'email' => 'pinguim@dolaravel.com'
+            'email' => 'pinguim@dolaravel.com',
+        ]);
+
+        User::factory()->create([
+            'name'  => 'Joe Doe',
+            'email' => 'joe@dolaravel.com',
         ]);
     }
 }
