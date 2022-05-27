@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\DailyScore;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DailyScoreFactory extends Factory
@@ -17,6 +18,7 @@ class DailyScoreFactory extends Factory
             'detail'  => 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩',
             'word'    => $this->faker->text(5),
             'status'  => 'pending',
+            'user_id' => User::factory(),
         ];
     }
 
@@ -32,7 +34,7 @@ class DailyScoreFactory extends Factory
                 '6/6' => 0,
                 'X/6' => -1,
             ];
-            
+
             $score              = $this->faker->randomElement(['1/6', '2/6', '3/6', '4/6', '5/6', '6/6', 'X/6']);
             $dailyScore->points = $scores[$score];
             $dailyScore->status = DailyScore::STATUS_FINISHED;
