@@ -21,7 +21,5 @@ class DatabaseSeeder extends Seeder
 
 //        DailyScore::factory()->for($rafael, 'user')->count(20)->create();
 //        DailyScore::factory()->for($joe, 'user')->count(20)->create();
-
-
     }
 }
