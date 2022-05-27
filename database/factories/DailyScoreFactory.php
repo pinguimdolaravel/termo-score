@@ -19,4 +19,23 @@ class DailyScoreFactory extends Factory
             'status'  => 'pending',
         ];
     }
+
+    public function withPoints()
+    {
+        return $this->afterMaking(function (DailyScore $dailyScore) {
+            $scores = [
+                '1/6' => 10,
+                '2/6' => 5,
+                '3/6' => 4,
+                '4/6' => 2,
+                '5/6' => 1,
+                '6/6' => 0,
+                'X/6' => -1,
+            ];
+            
+            $score              = $this->faker->randomElement(['1/6', '2/6', '3/6', '4/6', '5/6', '6/6', 'X/6']);
+            $dailyScore->points = $scores[$score];
+            $dailyScore->status = DailyScore::STATUS_FINISHED;
+        });
+    }
 }

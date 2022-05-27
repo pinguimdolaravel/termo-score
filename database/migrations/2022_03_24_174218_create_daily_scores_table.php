@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('daily_scores', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->unsignedSmallInteger('game_id');
             $table->string('score');
             $table->string('detail');
