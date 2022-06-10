@@ -14,8 +14,7 @@ class DailyScoreNotification extends Notification
 
     public function __construct(
         public DailyScore $dailyScore
-    )
-    {
+    ) {
         //
     }
 
