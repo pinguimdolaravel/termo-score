@@ -7,15 +7,18 @@ use Laravel\Socialite\Facades\Socialite;
 
 
 #region Socialite Logins
-Route::get('login/google/redirect', function () {
-    return Socialite::driver('google')->redirect();
-})->name('login.google.redirect');
+Route::get('login/{driver}/redirect', function ($driver) {
 
-Route::get('auth/google/callback', function () {
-    $googleUser = Socialite::driver('google')->user();
+    Validator::validate(compact('driver'), ['driver' => 'required|in:google,github']);
 
-    $user = User::query()->firstOrCreate(['email' => $googleUser->email], [
-        'name'     => $googleUser->name,
+    return Socialite::driver($driver)->redirect();
+})->name('auth.social.redirect');
+
+Route::get('auth/{driver}/callback', function ($driver) {
+    $socialUser = Socialite::driver($driver)->stateless()->user();
+
+    $user = User::query()->firstOrCreate(['email' => $socialUser->email], [
+        'name'     => $socialUser->name,
         'password' => bcrypt(Str::random(10)),
     ]);
 
@@ -23,7 +26,6 @@ Route::get('auth/google/callback', function () {
 
     return redirect()->route('dashboard');
 });
-
 #endregion
 
 

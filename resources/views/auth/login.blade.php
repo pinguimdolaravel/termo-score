@@ -59,10 +59,16 @@
             </div>
         </form>
 
-        <a href="{{ route('login.google.redirect') }}"
+        <a href="{{ route('auth.social.redirect', ['driver' => 'google']) }}"
            class="w-full text-center items-center mt-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
         >
             Login with Google
+        </a>
+
+        <a href="{{ route('auth.social.redirect', ['driver' => 'github']) }}"
+           class="w-full text-center items-center mt-5 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+        >
+            Login with Github
         </a>
     </x-auth-card>
 </x-guest-layout>
