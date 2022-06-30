@@ -9,9 +9,17 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        User::factory()->create([
+        $rafael = User::factory()->admin()->create([
             'name'  => 'Rafael Lunardelli',
-            'email' => 'pinguim@dolaravel.com'
+            'email' => 'pinguim@dolaravel.com',
         ]);
+
+        $joe = User::factory()->create([
+            'name'  => 'Joe Doe',
+            'email' => 'joe@dolaravel.com',
+        ]);
+
+//        DailyScore::factory()->for($rafael, 'user')->count(20)->create();
+//        DailyScore::factory()->for($joe, 'user')->count(20)->create();
     }
 }

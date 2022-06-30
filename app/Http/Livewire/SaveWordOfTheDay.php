@@ -6,10 +6,13 @@ use App\Models\WordOfDay;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class SaveWordOfTheDay extends Component
 {
+    use AuthorizesRequests;
+
     public ?string $word = null;
 
     public ?string $word_confirmation = null;
@@ -20,6 +23,8 @@ class SaveWordOfTheDay extends Component
 
     public function render(): Factory|View|Application
     {
+        $this->authorize('admin');
+
         return view('livewire.save-word-of-the-day');
     }
 

@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\DailyScore;
 use App\Models\WordOfDay;
+use App\Notifications\DailyScoreNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -53,6 +54,10 @@ class CheckDailyScoreJob implements ShouldQueue
             $points = 0;
             $status = DailyScore::STATUS_WRONG_WORD;
         }
+
+        $this->dailyScore->user->notify(
+            new DailyScoreNotification($this->dailyScore)
+        );
 
         return [$points, $status];
     }

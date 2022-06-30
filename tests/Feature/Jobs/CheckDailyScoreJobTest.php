@@ -14,6 +14,7 @@
 use App\Jobs\CheckDailyScoreJob;
 use App\Models\DailyScore;
 use App\Models\WordOfDay;
+use App\Notifications\DailyScoreNotification;
 
 it('should calculate the correct points', function ($gameScore, $expectedPoints) {
     // Arrange
@@ -63,4 +64,23 @@ test('the game id from the wordOfDay should be the same as the dailyScore entry'
     expect($dailyScore->refresh())
         ->points->toBeNull()
         ->status->toBe(DailyScore::STATUS_PENDING);
+});
+
+it('should send a notification to the user when the CheckDailyScore is finished', function () {
+    Notification::fake();
+
+    // Arrange
+    $dailyScore = DailyScore::factory()->create(['game_id' => 1, 'score' => '1/6', 'word' => 'score']);
+    $word       = WordOfDay::factory()->create(['word' => 'score', 'game_id' => 1]);
+
+    // Act
+    CheckDailyScoreJob::dispatchSync($word, $dailyScore);
+
+    // Assert
+    Notification::assertSentTo(
+        $dailyScore->user,
+        DailyScoreNotification::class,
+        function (DailyScoreNotification $notification) use ($dailyScore) {
+            return $notification->dailyScore->is($dailyScore);
+        });
 });
