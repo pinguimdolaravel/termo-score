@@ -20,7 +20,7 @@ it('should be able to update a group name', function () {
         ->set('group.name', 'New Test Group')
         ->call('save')
         ->assertHasNoErrors()
-        ->assertEmitted('group::refresh-list');
+        ->assertEmittedTo(Groups\Index::class, 'group::refresh-list');
 
     expect($group->refresh())
         ->name->toBe('New Test Group');

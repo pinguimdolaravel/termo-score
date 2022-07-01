@@ -34,6 +34,6 @@ class Update extends Component
         $this->validate();
 
         $this->group->save();
-        $this->emit('group::refresh-list');
+        $this->emitTo(Index::class, 'group::refresh-list');
     }
 }

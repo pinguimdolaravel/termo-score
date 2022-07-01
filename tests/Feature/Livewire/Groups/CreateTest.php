@@ -18,7 +18,7 @@ it('should be able to create a new group', function () {
         ->set('group.name', 'Test Group')
         ->call('save')
         ->assertHasNoErrors()
-        ->assertEmitted('group::refresh-list');
+        ->assertEmittedTo(Groups\Index::class, 'group::refresh-list');
 
     assertDatabaseCount(Group::class, 1);
 });

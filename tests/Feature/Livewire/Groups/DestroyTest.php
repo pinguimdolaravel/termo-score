@@ -18,7 +18,7 @@ it('should be able to delete a group', function () {
 
     livewire(Groups\Destroy::class, compact('group'))
         ->call('destroy')
-        ->assertEmitted('group::refresh-list');
+        ->assertEmittedTo(Groups\Index::class, 'group::refresh-list');
 
     assertDatabaseCount(Group::class, 0);
 });
