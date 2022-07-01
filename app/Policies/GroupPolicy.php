@@ -30,6 +30,7 @@ class GroupPolicy
 
     public function delete(User $user, Group $group): bool
     {
+        return $user->is($group->user);
     }
 
     public function restore(User $user, Group $group): bool
