@@ -17,7 +17,8 @@ it('should be able to delete a group', function () {
     $group = Group::factory()->createOne(['user_id' => $this->user->id]);
 
     livewire(Groups\Destroy::class, compact('group'))
-        ->call('destroy');
+        ->call('destroy')
+        ->assertEmitted('group::refresh-list');
 
     assertDatabaseCount(Group::class, 0);
 });

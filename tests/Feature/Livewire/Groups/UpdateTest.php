@@ -7,18 +7,20 @@ use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
 
 beforeEach(function () {
-    $this->user = User::factory()->createOne();
+    $this->user  = User::factory()->createOne();
+    $this->group = Group::factory()->createOne(['name' => 'Old Test Group', 'user_id' => $this->user->id]);
 
     actingAs($this->user);
 });
 
 it('should be able to update a group name', function () {
-    $group = Group::factory()->createOne(['name' => 'Old Test Group']);
+    $group = $this->group;
 
     livewire(Groups\Update::class, compact('group'))
         ->set('group.name', 'New Test Group')
         ->call('save')
-        ->assertHasNoErrors();
+        ->assertHasNoErrors()
+        ->assertEmitted('group::refresh-list');
 
     expect($group->refresh())
         ->name->toBe('New Test Group');
@@ -35,7 +37,7 @@ it('should check if the person that is trying to edit the group owns the group',
 
 #region Validations
 test('name should be required', function () {
-    $group = Group::factory()->createOne(['name' => 'Old Test Group']);
+    $group = $this->group;
     livewire(Groups\Update::class, compact('group'))
         ->set('group.name', '')
         ->call('save')
@@ -43,7 +45,7 @@ test('name should be required', function () {
 });
 
 test('name should be a valid string', function () {
-    $group = Group::factory()->createOne(['name' => 'Old Test Group']);
+    $group = $this->group;
     livewire(Groups\Update::class, compact('group'))
         ->set('group.name', 1)
         ->call('save')
@@ -51,7 +53,7 @@ test('name should be a valid string', function () {
 });
 
 test('name should have a min of 3 characters', function () {
-    $group = Group::factory()->createOne(['name' => 'Old Test Group']);
+    $group = $this->group;
     livewire(Groups\Update::class, compact('group'))
         ->set('group.name', 'a')
         ->call('save')
@@ -59,7 +61,7 @@ test('name should have a min of 3 characters', function () {
 });
 
 test('name should have a max of 30 characters', function () {
-    $group = Group::factory()->createOne(['name' => 'Old Test Group']);
+    $group = $this->group;
     livewire(Groups\Update::class, compact('group'))
         ->set('group.name', str_repeat('a', 31))
         ->call('save')
@@ -69,7 +71,7 @@ test('name should have a max of 30 characters', function () {
 test('name should be unique', function () {
     Group::factory()->create(['name' => 'Test Group']);
 
-    $group = Group::factory()->createOne(['name' => 'Old Test Group']);
+    $group = $this->group;
 
     livewire(Groups\Update::class, compact('group'))
         ->set('group.name', 'Test Group')

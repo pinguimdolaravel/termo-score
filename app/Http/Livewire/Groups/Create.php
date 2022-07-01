@@ -32,5 +32,7 @@ class Create extends Component
 
         $this->group->user_id = auth()->id();
         $this->group->save();
+
+        $this->emit('group::refresh-list');
     }
 }
