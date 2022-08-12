@@ -8,7 +8,7 @@ class GameIdRule implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        return preg_match('/^#+(\d{1,3})$/', $value);
+        return preg_match('/^#\d+$/', $value);
     }
 
     public function message(): string
