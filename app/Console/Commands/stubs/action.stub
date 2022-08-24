@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Actions\Actionable;
+
+class {{ class }} extends Actionable
+{
+    public function handle()
+    {
+        //
+    }
+}

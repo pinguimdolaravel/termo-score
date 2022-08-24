@@ -4,7 +4,7 @@ namespace App\Actions;
 
 use App\Models\User;
 
-class RegisterUser extends Action
+class RegisterUser extends Actionable
 {
     /**
      * @param string|null $name
@@ -25,13 +25,3 @@ class RegisterUser extends Action
         ]);
     }
 }
-
-//RegisterUser::run(
-//    name: 'Rafael',
-//    email: 'rafael@dolaravel.com',
-//    password: 'jeremias'
-//);
-////
-//
-//(new RegisterUser(name: 'Rafael', email: 'rafael@dolaravel.com', password: 'jeremias'))
-//    ->execute();

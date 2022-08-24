@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-abstract class Action
+abstract class Actionable
 {
     public abstract function handle();
 
