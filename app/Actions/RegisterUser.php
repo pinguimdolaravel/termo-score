@@ -16,8 +16,7 @@ class RegisterUser extends Actionable
         ?string $name = null,
         ?string $email = null,
         ?string $password = null,
-    ): User
-    {
+    ): User {
         return User::query()->create([
             'name'     => $name,
             'email'    => $email,

@@ -12,6 +12,5 @@ class DuduCommand extends Command
 
     public function handle()
     {
-
     }
 }
