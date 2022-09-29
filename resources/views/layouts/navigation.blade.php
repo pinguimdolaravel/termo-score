@@ -22,6 +22,11 @@
                             {{ __('Save Word Of The Day') }}
                         </x-nav-link>
                     @endcan
+
+                    <x-nav-link :href="route('groups.index')"
+                                :active="request()->routeIs('groups.index')">
+                        {{ __('My Groups') }}
+                    </x-nav-link>
                 </div>
             </div>
 
