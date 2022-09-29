@@ -28,10 +28,10 @@ class Create extends Component
 
     public function save()
     {
-//        $this->validate();
-//
-//        $this->group->user_id = auth()->id();
-//        $this->group->save();
+        $this->validate();
+
+        $this->group->user_id = auth()->id();
+        $this->group->save();
 
         $this->emitTo(Index::class, 'group::refresh-list');
     }
