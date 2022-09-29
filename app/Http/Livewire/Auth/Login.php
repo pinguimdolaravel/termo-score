@@ -22,7 +22,7 @@ class Login extends Component
     public function login()
     {
         if (Auth::attempt([
-            'email' => $this->email,
+            'email'    => $this->email,
             'password' => $this->password,
         ])) {
             $this->redirect('/');
