@@ -1,3 +1,3 @@
 <div>
-    {{-- Stop trying to control. --}}
+    <button wire:click="save">oiii criando</button>
 </div>
