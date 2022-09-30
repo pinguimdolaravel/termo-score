@@ -11,7 +11,7 @@
                 <x-button>✔</x-button>
             </form>
         @endunless
-        <span class="text-xs tracking-wider text-gray-800 bg-gray-50 px-2 rounded-lg"> total points :: 20 </span>
+        <livewire:groups.destroy :group="$group" wire:key="{{ $group->id }}-destroy"/>
     </x-h.2>
     <div class="p-4 flex items-end space-x-2 justify-center">
         <div class="text-5xl font-bold">2</div>

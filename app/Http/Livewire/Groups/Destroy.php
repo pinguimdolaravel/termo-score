@@ -15,6 +15,8 @@ class Destroy extends Component
 
     public ?Group $group = null;
 
+    public int $confirming = 0;
+
     public function mount()
     {
         $this->authorize('delete', $this->group);
