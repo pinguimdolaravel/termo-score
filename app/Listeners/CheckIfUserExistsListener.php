@@ -12,6 +12,10 @@ class CheckIfUserExistsListener
     {
         if ($user = User::whereEmail($event->invitation->email)->first()) {
             $user->notify(new BePartOfGroupNotification());
+
+            return;
         }
+
+        $event->invitation->notify(new BePartOfGroupNotification());
     }
 }

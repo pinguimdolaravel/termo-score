@@ -66,3 +66,24 @@ test('if user exists notify him to be part of the group', function () {
     // Assert
     Notification::assertSentTo($invited, BePartOfGroupNotification::class);
 });
+
+test('if user not exists notify him anyway to be part of the group', function () {
+    // Arrange
+    Notification::fake();
+    $user       = User::factory()->create();
+    $group      = Group::factory()->create(['user_id' => $user->id]);
+    $invitation = GroupInvitation::create([
+        'user_id'  => $user->id,
+        'group_id' => $group->id,
+        'email'    => 'jeremias@dolaravel.com',
+    ]);
+
+    $event = new GroupInvitationCreatedEvent($invitation);
+
+    // Act
+    $listener = new CheckIfUserExistsListener();
+    $listener->handle($event);
+
+    // Assert
+    Notification::assertSentTo($invitation, BePartOfGroupNotification::class);
+});
