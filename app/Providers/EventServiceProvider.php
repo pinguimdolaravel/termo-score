@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\GroupInvitationCreatedEvent;
 use App\Events\WordOfDayCreatedEvent;
+use App\Listeners\CheckIfUserExistsListener;
 use App\Listeners\CreateJobsToCheckDailyScoreListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -16,11 +18,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
+        Registered::class                  => [
             SendEmailVerificationNotification::class,
         ],
-        WordOfDayCreatedEvent::class => [
+        WordOfDayCreatedEvent::class       => [
             CreateJobsToCheckDailyScoreListener::class,
+        ],
+        GroupInvitationCreatedEvent::class => [
+            CheckIfUserExistsListener::class,
         ],
     ];
 
