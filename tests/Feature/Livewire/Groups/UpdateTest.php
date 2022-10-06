@@ -19,8 +19,7 @@ it('should be able to update a group name', function () {
     livewire(Groups\Update::class, compact('group'))
         ->set('group.name', 'New Test Group')
         ->call('save')
-        ->assertHasNoErrors()
-        ->assertEmittedTo(Groups\Index::class, 'group::refresh-list');
+        ->assertHasNoErrors();
 
     expect($group->refresh())
         ->name->toBe('New Test Group');

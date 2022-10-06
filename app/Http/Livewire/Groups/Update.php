@@ -7,6 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Update extends Component
@@ -15,9 +16,21 @@ class Update extends Component
 
     public ?Group $group = null;
 
-    protected array $rules = [
-        'group.name' => ['required', 'string', 'min:3', 'max:30', 'unique:groups,name'],
-    ];
+    public int $editing = 0;
+
+    public function getRules(): array
+    {
+        return [
+            'group.name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:30',
+                Rule::unique('groups', 'name')
+                    ->ignore($this->group),
+            ],
+        ];
+    }
 
     public function mount()
     {
@@ -34,7 +47,7 @@ class Update extends Component
         $this->validate();
 
         $this->group->save();
-        
-        $this->emitTo(Index::class, 'group::refresh-list');
+
+        $this->editing = 0;
     }
 }
