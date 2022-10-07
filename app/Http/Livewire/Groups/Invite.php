@@ -14,6 +14,10 @@ class Invite extends Component
 
     public ?string $email = null;
 
+    protected array $rules = [
+        'email' => ['required', 'email', 'max:255'],
+    ];
+
     public function render(): View
     {
         return view('livewire.groups.invite');
@@ -21,12 +25,14 @@ class Invite extends Component
 
     public function save()
     {
-        GroupInvitation::create([
+        $this->validate();
+
+        $invitation = GroupInvitation::create([
             'user_id'  => auth()->id(),
             'group_id' => $this->group->id,
             'email'    => $this->email,
         ]);
 
-        GroupInvitationCreatedEvent::dispatch();
+        GroupInvitationCreatedEvent::dispatch($invitation);
     }
 }

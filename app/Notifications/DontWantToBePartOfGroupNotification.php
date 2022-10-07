@@ -5,7 +5,7 @@ namespace App\Notifications;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BePartOfGroupNotification extends Notification
+class DontWantToBePartOfGroupNotification extends Notification
 {
     public function __construct()
     {
@@ -19,9 +19,7 @@ class BePartOfGroupNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('Você foi convidado para fazer parte de um grupo no Termo-Score.')
-            ->action('Clique aqui para aceitar o convite!', url('/'))
-            ->line('Grato desde já! Vai tricolooooor! Nunca fui rebaixado.');
+            ->line('Quero nãOOO.');
     }
 
     public function toArray($notifiable): array

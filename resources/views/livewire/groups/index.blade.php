@@ -4,10 +4,17 @@
     <x-container>
         @foreach($this->groups as $group)
             <div>
-                <livewire:groups.update
-                    wire:key="{{ now()->timestamp }}-group"
-                    :group="$group"
-                />
+                @can('update', $group)
+                    <livewire:groups.update
+                        wire:key="{{ now()->timestamp }}-group"
+                        :group="$group"
+                    />
+                @else
+                    <livewire:groups.show
+                        wire:key="{{ now()->timestamp }}-group"
+                        :group="$group"
+                    />
+                @endcan
             </div>
         @endforeach
 
