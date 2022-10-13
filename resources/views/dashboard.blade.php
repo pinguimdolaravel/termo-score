@@ -4,7 +4,11 @@
     </x-header>
 
     <x-container>
-        <livewire:daily-scores/>
+        <div class="space-y-10">
+            <livewire:groups.accept-invitation/>
+            <livewire:daily-scores/>
+        </div>
+
         <livewire:log-daily-score/>
     </x-container>
 </x-app-layout>
