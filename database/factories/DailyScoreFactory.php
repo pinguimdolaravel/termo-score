@@ -14,7 +14,7 @@ class DailyScoreFactory extends Factory
     {
         return [
             'game_id' => 81,
-            'score'   => '1/6',
+            'score'   => $this->faker->randomElement(['1/6', '2/6', '3/6', '4/6', '5/6', '6/6', 'X/6']),
             'detail'  => 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩',
             'word'    => $this->faker->text(5),
             'status'  => 'pending',
