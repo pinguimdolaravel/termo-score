@@ -24,6 +24,7 @@
 </div>
 
 <livewire:scripts/>
+    @stack('scripts')
 </body>
 
 </html>
