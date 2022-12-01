@@ -13,8 +13,11 @@
         @endunless
         <livewire:groups.destroy :group="$group" wire:key="{{ $group->id }}-destroy"/>
     </x-h.2>
+
     <livewire:groups.invite :group="$group" wire:key="{{ $group->id }}-invite"/>
+
     <div class="p-4 flex items-end space-x-2 justify-center">
+
         <div class="text-5xl font-bold">2</div>
         <div class="text-3xl -mb-1 text-gray-400">/</div>
         <div class="text-2xl -mb-2">20</div>

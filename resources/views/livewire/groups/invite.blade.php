@@ -1,8 +1,18 @@
-<x-card>
-    <x-h.2>Invite someone</x-h.2>
-    <x-form wire:submit.prevent="save">
-        <x-input.text name="email" label="Email"/>
+<div>
+    <x-button wire:click="invite" class="w-full text-center rounded-none inline-grid bg-slate-700">
+        Invite someone to this group
+    </x-button>
 
-        <x-button>Save</x-button>
-    </x-form>
-</x-card>
+    @if($show)
+        <x-modal>
+            <x-form wire:submit.prevent="save" id="invitation-form">
+                <x-input.text name="email" label="Invite a little fella" placeholder="email@mail.com"/>
+            </x-form>
+
+            <x-slot:actions>
+                <x-button type="button" wire:click="save">Invite</x-button>
+                <x-button type="button" wire:click="$set('show', 0)" >hummmm, no</x-button>
+            </x-slot:actions>
+        </x-modal>
+    @endif
+</div>

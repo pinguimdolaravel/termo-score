@@ -14,6 +14,8 @@ class Invite extends Component
 
     public ?string $email = null;
 
+    public bool $show = false;
+
     protected array $rules = [
         'email' => ['required', 'email', 'max:255'],
     ];
@@ -34,5 +36,10 @@ class Invite extends Component
         ]);
 
         GroupInvitationCreatedEvent::dispatch($invitation);
+    }
+
+    public function invite()
+    {
+        $this->show = true;
     }
 }

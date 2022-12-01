@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Groups;
 
 use App\Models\Group;
+use App\Models\GroupInvitation;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,6 +12,7 @@ use Livewire\Component;
 
 /**
  * @property-read Collection|Group[] $groups
+ * @property-read bool $hasInvitations
  */
 class Index extends Component
 {
@@ -30,6 +32,11 @@ class Index extends Component
     public function getGroupsProperty()
     {
         return auth()->user()->groups;
+    }
+
+    public function getHasInvitationsProperty(): bool
+    {
+        return GroupInvitation::whereEmail(auth()->user()->email)->exists();
     }
 
     public function refreshList()

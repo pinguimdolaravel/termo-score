@@ -2,6 +2,10 @@
     <x-header>{{ __('My Groups') }}</x-header>
 
     <x-container>
+        @if($this->hasInvitations)
+            <livewire:groups.accept-invitation/>
+        @endif
+
         @foreach($this->groups as $group)
             <div>
                 @can('update', $group)
