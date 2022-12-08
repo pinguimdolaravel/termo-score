@@ -1,5 +1,5 @@
 <div class="w-full">
-    <div>
+    <div class="w-full bg-white p-5 rounded-lg shadow mb-5 font-bold tracking-wide text-lg">
         Total Points: {{ $this->total }}
     </div>
 

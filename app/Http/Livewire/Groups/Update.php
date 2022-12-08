@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Groups;
 
 use App\Models\Group;
+use App\Reports\MonthlyScore;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -49,5 +50,13 @@ class Update extends Component
         $this->group->save();
 
         $this->editing = 0;
+    }
+
+    public function getScoresProperty()
+    {
+        return (new MonthlyScore())
+            ->setGroup($this->group->id)
+            ->setUser(auth()->id())
+            ->run();
     }
 }

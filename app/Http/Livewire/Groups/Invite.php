@@ -14,6 +14,8 @@ class Invite extends Component
 
     public ?string $email = null;
 
+    public bool $show = false;
+
     protected array $rules = [
         'email' => ['required', 'email', 'max:255'],
     ];
@@ -26,6 +28,7 @@ class Invite extends Component
     public function save()
     {
         $this->validate();
+        ray('invite');
 
         $invitation = GroupInvitation::create([
             'user_id'  => auth()->id(),
@@ -33,6 +36,16 @@ class Invite extends Component
             'email'    => $this->email,
         ]);
 
+        ray('invitation created');
+
         GroupInvitationCreatedEvent::dispatch($invitation);
+
+        $this->show = false;
+        $this->reset('email');
+    }
+
+    public function invite()
+    {
+        $this->show = true;
     }
 }

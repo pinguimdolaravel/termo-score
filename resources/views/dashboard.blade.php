@@ -5,7 +5,7 @@
 
     <x-container>
         <div class="space-y-10">
-            <livewire:groups.accept-invitation/>
+            <livewire:daily-chart/>
             <livewire:daily-scores/>
         </div>
 

@@ -13,10 +13,22 @@
         @endunless
         <livewire:groups.destroy :group="$group" wire:key="{{ $group->id }}-destroy"/>
     </x-h.2>
+
     <livewire:groups.invite :group="$group" wire:key="{{ $group->id }}-invite"/>
-    <div class="p-4 flex items-end space-x-2 justify-center">
-        <div class="text-5xl font-bold">2</div>
-        <div class="text-3xl -mb-1 text-gray-400">/</div>
-        <div class="text-2xl -mb-2">20</div>
+
+    <div>
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300 w-full">
+                <tbody class="divide-y divide-gray-200 bg-white">
+                @foreach($this->scores as $item)
+                    <tr>
+                        <x-table.td>{{ $item->game_month }}</x-table.td>
+                        <x-table.td>{{ $item->rank }}/{{ $item->group_size }}</x-table.td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </x-card>
