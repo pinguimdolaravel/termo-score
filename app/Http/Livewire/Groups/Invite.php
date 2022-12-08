@@ -28,6 +28,7 @@ class Invite extends Component
     public function save()
     {
         $this->validate();
+        ray('invite');
 
         $invitation = GroupInvitation::create([
             'user_id'  => auth()->id(),
@@ -35,7 +36,12 @@ class Invite extends Component
             'email'    => $this->email,
         ]);
 
+        ray('invitation created');
+
         GroupInvitationCreatedEvent::dispatch($invitation);
+
+        $this->show = false;
+        $this->reset('email');
     }
 
     public function invite()
