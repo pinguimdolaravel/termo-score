@@ -23,9 +23,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'joe@dolaravel.com',
         ]);
 
-        $group = Group::factory()->create(['user_id' => $rafael->id, 'name' => 'Pinguim do Laravel']);
-        $group->users()->attach($rafael, ['created_at' => now()->subMonths(4)]);
-        $group->users()->attach($joe, ['created_at' => now()->subMonth()]);
+        $users = User::factory()->count(30)->create();
+
+        $groups = Group::factory()->count(20)->create(['user_id' => $rafael->id]);
+        foreach ($groups as $group) {
+            $group->users()->attach($rafael, ['created_at' => now()->subMonths(4)]);
+            $group->users()->attach($joe, ['created_at' => now()->subMonth()]);
+            foreach ($users as $user) {
+                $group->users()->attach($user, ['created_at' => now()->subMonths(rand(1, 4))]);
+            }
+        }
 
 //        GroupInvitation::create([
 //            'group_id' => $group->id,
@@ -56,7 +63,15 @@ class DatabaseSeeder extends Seeder
                     'game_id'    => $word->game_id,
                     'created_at' => now()->subDays($index),
                 ]);
-
+            foreach ($users as $user) {
+                DailyScore::factory()
+                    ->for($user, 'user')
+                    ->create([
+                        'word'       => $word->word,
+                        'game_id'    => $word->game_id,
+                        'created_at' => now()->subDays($index),
+                    ]);
+            }
         }
 
         DailyScore::all()->each(function (DailyScore $score) {
