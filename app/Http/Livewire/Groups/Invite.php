@@ -28,7 +28,6 @@ class Invite extends Component
     public function save()
     {
         $this->validate();
-        ray('invite');
 
         $invitation = GroupInvitation::create([
             'user_id'  => auth()->id(),
