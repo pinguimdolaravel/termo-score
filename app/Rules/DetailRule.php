@@ -8,13 +8,8 @@ class DetailRule implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        foreach (explode(PHP_EOL, $value) as $row) {
-            if (!preg_match('/^(⬛|🟨|🟩){5}$/', $row)) {
-                return false;
-            }
-        }
-
-        return true;
+        // Between one and six lines with five squares each
+        return preg_match('/^((⬛|🟨|🟩){5}'.PHP_EOL.'){0,5}(⬛|🟨|🟩){5}$/', $value);
     }
 
     public function message(): string
